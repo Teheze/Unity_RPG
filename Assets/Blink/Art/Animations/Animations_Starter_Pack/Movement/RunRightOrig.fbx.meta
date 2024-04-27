@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e5ca3804094e34147ba59df89c473174
+guid: 5120a970404f418419c83af871d9a022
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable:
@@ -7,8 +7,8 @@ ModelImporter:
       74: 416870459326255563
     second: tpose
   - first:
-      74: 5987713911036300057
-    second: RunForward
+      74: -4630368382552359268
+    second: RunRight
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -24,10 +24,10 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'human_male_run_01' has import animation warnings
-      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'Scapula_L' has translation animation that
-      will be discarded.\n"
+    animationImportWarnings: "\nClip 'human_male_runright_01' has import animation
+      warnings that might lower retargeting quality:\nNote: Activate translation
+      DOF on avatar to improve retargeting quality.\n\t'Scapula_L' has translation
+      animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -53,7 +53,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 0
-      loopBlend: 1
+      loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -70,8 +70,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: RunForward
-      takeName: human_male_run_01
+      name: RunRight
+      takeName: human_male_runright_01
       internalID: 0
       firstFrame: 2
       lastFrame: 42
@@ -97,7 +97,7 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 2
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -581,13 +581,13 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: RunForward(Clone)
+    - name: RunRight(Clone)
       parentName: 
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Armature
-      parentName: RunForward(Clone)
+      parentName: RunRight(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}

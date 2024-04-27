@@ -86,9 +86,9 @@ public class PlayerMovement : MonoBehaviour
 
         // Calculate speed multiplier when sprinting
         float speedMultiplier = 1f;
-        if (Input.GetKey(sprintKey) && verticalInput > 0)
+        if (Input.GetKey(sprintKey) && verticalInput > 0 || Input.GetKey(sprintKey) && verticalInput < 0 || Input.GetKey(sprintKey) && horizontalInput > 0 || Input.GetKey(sprintKey) && horizontalInput < 0)
         {
-            speedMultiplier = 3.5f; // Zwiêksz szybkoœæ gdy sprint
+            speedMultiplier = 4f; // Zwiêksz szybkoœæ gdy sprint
         }
 
         // on ground

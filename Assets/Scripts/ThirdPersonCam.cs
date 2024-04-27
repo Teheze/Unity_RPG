@@ -12,17 +12,17 @@ public class ThirdPersonCam : MonoBehaviour
 
     public float rotationSpeed;
 
-    public Transform combatLookAt;
+    //public Transform combatLookAt;
 
     public GameObject thirdPersonCam;
-    public GameObject combatCam;
+    //public GameObject combatCam;
     public GameObject topDownCam;
 
     public CameraStyle currentStyle;
     public enum CameraStyle
     {
         Basic,
-        Combat,
+        //Combat,
         Topdown
     }
     // Start is called before the first frame update
@@ -30,6 +30,7 @@ public class ThirdPersonCam : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        SwitchCameraStyle(CameraStyle.Basic);
     }
 
     // Update is called once per frame
@@ -37,8 +38,8 @@ public class ThirdPersonCam : MonoBehaviour
     {
         // switch styles
         if (Input.GetKeyDown(KeyCode.Alpha1)) SwitchCameraStyle(CameraStyle.Basic);
-        if (Input.GetKeyDown(KeyCode.Alpha2)) SwitchCameraStyle(CameraStyle.Combat);
-        if (Input.GetKeyDown(KeyCode.Alpha3)) SwitchCameraStyle(CameraStyle.Topdown);
+        //if (Input.GetKeyDown(KeyCode.Alpha2)) SwitchCameraStyle(CameraStyle.Combat);
+        if (Input.GetKeyDown(KeyCode.Alpha2)) SwitchCameraStyle(CameraStyle.Topdown);
 
         // rotate orientation
         Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
@@ -55,23 +56,23 @@ public class ThirdPersonCam : MonoBehaviour
                 playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
         }
 
-        else if (currentStyle == CameraStyle.Combat)
-        {
-            Vector3 dirToCombatLookAt = combatLookAt.position - new Vector3(transform.position.x, combatLookAt.position.y, transform.position.z);
-            orientation.forward = dirToCombatLookAt.normalized;
+        //else if (currentStyle == CameraStyle.Combat)
+        //{
+        //    Vector3 dirToCombatLookAt = combatLookAt.position - new Vector3(transform.position.x, combatLookAt.position.y, transform.position.z);
+        //    orientation.forward = dirToCombatLookAt.normalized;
 
-            playerObj.forward = dirToCombatLookAt.normalized;
-        }
+        //    playerObj.forward = dirToCombatLookAt.normalized;
+        //}
     }
 
     private void SwitchCameraStyle(CameraStyle newStyle)
     {
-        combatCam.SetActive(false);
+        //combatCam.SetActive(false);
         thirdPersonCam.SetActive(false);
         topDownCam.SetActive(false);
 
         if (newStyle == CameraStyle.Basic) thirdPersonCam.SetActive(true);
-        if (newStyle == CameraStyle.Combat) combatCam.SetActive(true);
+        //if (newStyle == CameraStyle.Combat) combatCam.SetActive(true);
         if (newStyle == CameraStyle.Topdown) topDownCam.SetActive(true);
 
         currentStyle = newStyle;
