@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -16,7 +18,9 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
+    //
     public KeyCode sprintKey = KeyCode.LeftShift;
+    //
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -45,11 +49,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
         MyInput();
         SpeedControl();
 
-
+        // handle drag
         if (grounded)
             rb.drag = groundDrag;
         else
@@ -66,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
+        // when to jump
         if (Input.GetKey(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;
@@ -80,8 +86,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
+        // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
+        // Calculate speed multiplier when sprinting
         float speedMultiplier = 1f;
         if (Input.GetKey(sprintKey) && moveDirection.magnitude > 0)
         {
@@ -90,8 +98,10 @@ public class PlayerMovement : MonoBehaviour
             hungerBar.DecreaseHunger(0.1f * Time.fixedDeltaTime);  //Decrease hunger while sprinting
         }
 
+        // on ground
         if (grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * speedMultiplier * 10f, ForceMode.Force);
+        // in air
         else if (!grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * speedMultiplier * 10f * airMultiplier, ForceMode.Force);
     }
@@ -100,6 +110,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
+        // limit velocity if needed
         if (flatVel.magnitude > moveSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
@@ -109,7 +120,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        // reset y velocity
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
