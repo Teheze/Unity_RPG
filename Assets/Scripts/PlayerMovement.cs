@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public float airMultiplier;
     bool readyToJump;
 
+
     [HideInInspector] public float walkSpeed;
     [HideInInspector] public float sprintSpeed;
 
@@ -37,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody rb;
 
     public HungerBar hungerBar;  // Reference to the HungerBar
-
+    public float speedMultiplier = 1f;
 
     private void Start()
     {
@@ -59,6 +60,8 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = groundDrag;
         else
             rb.drag = 0;
+
+        bool leftClicked = Input.GetKey(KeyCode.Mouse0);
     }
 
     private void FixedUpdate()
@@ -72,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
-        if (Input.GetKey(jumpKey) && readyToJump && grounded)
+        if (Input.GetKeyDown(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;
             Jump();
@@ -97,6 +100,7 @@ public class PlayerMovement : MonoBehaviour
 
             hungerBar.DecreaseHunger(0.1f * Time.fixedDeltaTime);  //Decrease hunger while sprinting
         }
+
 
         // on ground
         if (grounded)
