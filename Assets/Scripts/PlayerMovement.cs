@@ -62,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = 0;
 
         bool leftClicked = Input.GetKey(KeyCode.Mouse0);
+
     }
 
     private void FixedUpdate()
