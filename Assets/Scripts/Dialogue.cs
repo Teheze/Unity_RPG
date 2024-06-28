@@ -37,6 +37,19 @@ public class Dialogue : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+       if(other.name == "PlayerObj")
+       {
+            player_detection = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        player_detection = false;
+    }
+
 
     void StartDialogue()
     {
