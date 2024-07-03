@@ -53,4 +53,39 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlaySFX(string name, float volumePercentage)
+    {
+        Sound s = System.Array.Find(sfxSounds, sound => sound.name == name);
+
+        if (s == null)
+        {
+            Debug.Log("Sound: " + name + " not found!");
+        }
+
+        else
+        {
+            volumePercentage = musicSource.volume * volumePercentage;
+            sfxSource.PlayOneShot(s.clip, volumePercentage);
+        }
+    }
+
+    public void ToggleMusic()
+    {
+        musicSource.mute = !musicSource.mute;
+    }
+
+    public void ToggleSFX() 
+    {
+        sfxSource.mute = !sfxSource.mute;
+    }
+
+    public void MusicVolume(float volume)
+    {
+        musicSource.volume = volume;
+    }
+
+    public void SFXVolume(float volume)
+    {
+        sfxSource.volume = volume;
+    }
 }

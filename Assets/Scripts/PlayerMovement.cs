@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -13,15 +15,15 @@ public class PlayerMovement : MonoBehaviour
     public float airMultiplier;
     bool readyToJump;
 
+    //Timer for step sound
+    private float timer = 0.0f;
 
-    [HideInInspector] public float walkSpeed;
-    [HideInInspector] public float sprintSpeed;
+    [HideInInspector] public float walkSpeed = 2.0f;  // Set default walk speed
+    [HideInInspector] public float sprintSpeed = 4.0f;  // Set default sprint speed
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
-    //
     public KeyCode sprintKey = KeyCode.LeftShift;
-    //
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -62,12 +64,34 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = 0;
 
         bool leftClicked = Input.GetKey(KeyCode.Mouse0);
+        timer += Time.deltaTime;
 
+        // Play step sound
+        if (grounded && moveDirection.magnitude > 0)
+        {
+            float stepInterval = Input.GetKey(sprintKey) ? 0.3f : 0.6f;
+            StepSound(stepInterval);
+        }
     }
 
     private void FixedUpdate()
     {
         MovePlayer();
+    }
+
+    private void StepSound(float stepTime)
+    {
+        if (timer >= stepTime)
+        {
+            int stepIndex = Random.Range(0, 7);  // Generate a random number between 0 and 6
+            if (stepTime == 0.6f)
+            {
+                AudioManager.Instance.PlaySFX("Step" + stepIndex, 0.3f);
+            }
+            else
+            AudioManager.Instance.PlaySFX("Step" + stepIndex, 0.5f);
+            timer = 0.0f;
+        }
     }
 
     private void MyInput()
@@ -102,13 +126,16 @@ public class PlayerMovement : MonoBehaviour
             hungerBar.DecreaseHunger(0.1f * Time.fixedDeltaTime);  //Decrease hunger while sprinting
         }
 
-
         // on ground
         if (grounded)
+        {
             rb.AddForce(moveDirection.normalized * moveSpeed * speedMultiplier * 10f, ForceMode.Force);
+        }
         // in air
         else if (!grounded)
+        {
             rb.AddForce(moveDirection.normalized * moveSpeed * speedMultiplier * 10f * airMultiplier, ForceMode.Force);
+        }
     }
 
     private void SpeedControl()
