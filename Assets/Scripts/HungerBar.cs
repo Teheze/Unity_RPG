@@ -6,7 +6,7 @@ public class HungerBar : MonoBehaviour
     public Slider hungerSlider;
     public Slider easeHungerSlider;
 
-    public HealthBar healthBar;  // Referencja do HealthBar
+    public HealthBar healthBar;
 
     public float maxHunger = 100f;
     public float hunger;
@@ -31,7 +31,7 @@ public class HungerBar : MonoBehaviour
             easeHungerSlider.value = Mathf.Lerp(easeHungerSlider.value, hunger, lerpSpeed);
         }
 
-        // Regeneracja zdrowia, jeœli poziom g³odu jest wy¿szy ni¿ 70
+        // Health regeneration if hunger level is higher than 70
         if (hunger > 70 && healthBar != null)
         {
             healthBar.health = Mathf.Min(healthBar.maxHealth, healthBar.health + 1 * Time.deltaTime);
