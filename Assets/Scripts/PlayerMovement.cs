@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security.Cryptography;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -15,11 +11,11 @@ public class PlayerMovement : MonoBehaviour
     public float airMultiplier;
     bool readyToJump;
 
-    //Timer for step sound
+    // Timer for step sound
     private float timer = 0.0f;
 
-    [HideInInspector] public float walkSpeed = 2.0f;  // Set default walk speed
-    [HideInInspector] public float sprintSpeed = 4.0f;  // Set default sprint speed
+    [HideInInspector] public float walkSpeed = 2.0f; // Walk speed
+    [HideInInspector] public float sprintSpeed = 4.0f; // Sprint speed
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -39,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
-    public HungerBar hungerBar;  // Reference to the HungerBar
+    public HungerBar hungerBar; // Reference to the HungerBar
     public float speedMultiplier = 1f;
 
     private void Start()
@@ -47,17 +43,17 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump = true;
-        hungerBar = FindObjectOfType<HungerBar>();  // Ensure HungerBar is found
+        hungerBar = FindObjectOfType<HungerBar>(); // Ensure HungerBar is found
     }
 
     private void Update()
     {
-        // ground check
+        // Ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
         MyInput();
         SpeedControl();
 
-        // handle drag
+        // Handle drag
         if (grounded)
             rb.drag = groundDrag;
         else
@@ -83,13 +79,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (timer >= stepTime)
         {
-            int stepIndex = Random.Range(0, 7);  // Generate a random number between 0 and 6
+            int stepIndex = Random.Range(0, 7); // Generate a random number between 0 and 6
             if (stepTime == 0.6f)
             {
                 AudioManager.Instance.PlaySFX("Step" + stepIndex, 0.3f);
             }
             else
-            AudioManager.Instance.PlaySFX("Step" + stepIndex, 0.5f);
+                AudioManager.Instance.PlaySFX("Step" + stepIndex, 0.5f);
             timer = 0.0f;
         }
     }

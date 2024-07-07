@@ -1,24 +1,41 @@
-using System.Diagnostics;
+using System.Collections;
 using UnityEngine;
 
 public class Collectible : MonoBehaviour
 {
-    // Metoda wywo³ywana, gdy coœ wchodzi w trigger tego obiektu
+    public float holdTime = 1.0f;
+    private bool isHolding = false;
+
     private void OnTriggerStay(Collider other)
     {
-        // Sprawdzenie, czy gracz naciska klawisz "E"
-        if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.E))
+        if (other.CompareTag("Player"))
         {
-            // Logika zbierania obiektu, np. dodanie do ekwipunku
-            CollectItem();
+            if (Input.GetKey(KeyCode.E))
+            {
+                if (!isHolding)
+                {
+                    StartCoroutine(HoldToCollect());
+                }
+            }
+            else
+            {
+                isHolding = false;
+                StopAllCoroutines();
+            }
         }
     }
 
-    // Metoda, która wykonuje logikê zbierania obiektu
+    private IEnumerator HoldToCollect()
+    {
+        isHolding = true;
+        yield return new WaitForSeconds(holdTime);
+        CollectItem();
+    }
+
     private void CollectItem()
     {
-        // Przyk³ad: ukrycie obiektu lub jego dezaktywacja
         gameObject.SetActive(false);
-        // Mo¿esz tutaj dodaæ logikê dodawania przedmiotu do ekwipunku gracza
+        CollectManager.Instance.ItemCollected();
+        Debug.Log("Item Collected!");
     }
 }
